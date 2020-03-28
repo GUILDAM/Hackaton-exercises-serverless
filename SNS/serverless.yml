@@ -1,0 +1,24 @@
+service: sns-to-slack
+
+provider:
+  name: aws
+  runtime: python3.7
+  timeout: 10
+
+package:
+  exclude:
+    - layer/**
+
+layers:
+  slack:
+    path: layer
+    description: "dependencies slack"
+
+functions:
+  sendtoslack:
+    handler: lambda.lambda_handler
+    layers:
+      - {Ref: SlackLambdaLayer}
+    events:
+     - sns:
+         arn: "arn:aws:sns:us-east-1:553526822818:novo"

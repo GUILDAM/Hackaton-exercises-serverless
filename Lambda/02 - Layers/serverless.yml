@@ -1,0 +1,20 @@
+service: teste-lambda-layers
+
+provider:
+  name: aws
+  runtime: python3.7
+
+package:
+  exclude:
+    - layer/**
+
+layers:
+  LayerDependencies:
+    path: layer
+    description: "learning layers"
+
+functions:
+  hello:
+    handler: handler.hello
+    layers:
+      - {Ref: LayerDependenciesLambdaLayer}
